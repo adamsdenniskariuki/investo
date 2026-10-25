@@ -4,7 +4,7 @@ import { compact } from '../lib/format';
 import type { BarSegment, DiagramBody, LineSeries, TimelineEvent, Tone, ValueFormat } from './specs';
 
 export const W = 340;
-const DASHES = ['', '7 4', '2 4', '10 3 2 3'];
+export const DASHES = ['', '7 4', '2 4', '10 3 2 3'];
 const CHAR_W = 6.6; // average glyph width at 12px, a little generous for wide fonts
 
 export const toneVar = (t: Tone) => (t === 'muted' ? 'var(--muted)' : `var(--${t})`);

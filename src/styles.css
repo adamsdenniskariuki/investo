@@ -301,6 +301,10 @@ select {
   min-height: 44px;
   width: 100%;
 }
+input[aria-invalid='true'] {
+  border-color: var(--danger-text);
+  border-style: dashed;
+}
 .field {
   margin: 0 0 0.9rem;
 }
