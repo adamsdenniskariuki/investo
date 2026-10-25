@@ -7,7 +7,7 @@ import '@fontsource/lexend/700.css';
 import '@fontsource/literata/400.css';
 import '@fontsource/literata/700.css';
 import './styles.css';
-import { App } from './App';
+import App from './App';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
