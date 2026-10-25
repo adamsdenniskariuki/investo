@@ -43,7 +43,21 @@ npm run typecheck
 npm test           # unit tests (Vitest), incl. WCAG AA contrast checks for every theme
 npm run build      # production build to dist/
 npm run preview    # serve dist/ on http://localhost:4173
+npx playwright install chromium   # once
+npm run e2e        # Playwright end-to-end + axe accessibility sweep (mobile/tablet/desktop × light/dark)
 ```
+
+`npm test` also regenerates [`docs/SOURCES.md`](docs/SOURCES.md) from the lessons; CI fails if it is out of date.
+
+## Content rules
+
+- Lessons live in `src/content/` (`basics.ts`, `kenya.ts`); tracks and calculators in `tracks.ts`.
+- **IDs are append-only.** Track, lesson, question, badge and tool IDs are listed in `src/content/ids.lock.ts`
+  and a test fails if one disappears, so old backups keep working. Add new IDs; never rename or reuse old ones.
+- Every lesson has 2–4 original SVG diagrams (`src/diagrams/specs.ts`), each with a title, description and caption.
+  A test renders each one and checks it is accessible.
+- Rates, limits and tax rules are written as dated examples (“as of …”) with links to official sources, and
+  calculators only use numbers the learner types in.
 
 ## Stack
 
@@ -64,3 +78,30 @@ On the `madebyfavor.com` DNS zone:
 | CNAME | `investo` | `adamsdenniskariuki.github.io` |
 
 Once GitHub has issued the certificate, **Enforce HTTPS** is turned on in the repository’s Pages settings.
+
+## Backup format
+
+Progress is stored in the browser (`localStorage` key `investo:v1`). **Progress → Export backup** downloads
+`investo-backup-YYYY-MM-DD.json`:
+
+```json
+{
+  "app": "investo",
+  "format": 1,
+  "exportedAt": "2026-10-01T09:30:00.000Z",
+  "progress": {
+    "schema": 1,
+    "xp": 145,
+    "lessons": { "b01": { "completedAt": "…", "bestScore": 3, "total": 3, "attempts": 1, "rev": 1 } },
+    "correct": { "b01-q1": "…" },
+    "activeDays": ["2026-09-30", "2026-10-01"],
+    "badges": { "first-step": "…" },
+    "toolsUsed": { "compound": "…" },
+    "lastExportAt": "…"
+  },
+  "settings": { "palette": "savanna", "mode": "system", "font": "atkinson", "textSize": "md" }
+}
+```
+
+Import validates the file, drops unknown or malformed fields, and refuses backups from a newer `format`. Because
+content IDs are append-only, a backup made today will still import after new lessons are added.
