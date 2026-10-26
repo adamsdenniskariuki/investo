@@ -37,6 +37,8 @@ const PAGES: Array<{ name: string; open: (page: Page) => Promise<void> }> = [
     },
   },
   { name: 'calculators', open: (p) => p.goto('/#/tools').then(() => undefined) },
+  { name: 'global track', open: (p) => p.goto('/#/track/global').then(() => undefined) },
+  { name: 'currency tool', open: (p) => p.goto('/#/tools/fx-return').then(() => undefined) },
   {
     name: 'calculator with error',
     open: async (p) => {

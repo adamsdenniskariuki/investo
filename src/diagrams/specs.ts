@@ -542,6 +542,139 @@ export const DIAGRAMS = {
       { heading: 'Often exempt or relieved', tone: 'chart1', items: ['Infrastructure bond interest (check the prospectus)', 'Pension contributions within the limit'] },
     ],
   },
+  // ── Global ───────────────────────────────────────────────
+  'nse-vs-world': {
+    type: 'compare',
+    title: 'The NSE alone compared with global markets',
+    desc: 'Two columns. NSE only: about sixty listed companies, a few large firms make up much of the value, one economy, one currency. Global markets: thousands of companies, many industries and countries, several currencies, so no single company decides the result.',
+    columns: [
+      { heading: 'NSE only', tone: 'chart2', items: ['About 60 listed companies', 'A few big names dominate', 'One economy', 'One currency (KES)'] },
+      { heading: 'Global markets', tone: 'chart1', items: ['Thousands of companies', 'Many industries', 'Many countries', 'Several currencies'] },
+    ],
+  },
+  'global-diversify': {
+    type: 'donut',
+    title: 'One illustrative spread-out mix',
+    desc: 'A donut chart of one made-up example mix, not a recommendation: Kenyan money market fund and bonds 40 percent, NSE shares 20 percent, global shares through a fund 30 percent, and other assets such as a REIT or gold 10 percent.',
+    centre: 'Example mix',
+    slices: [
+      { label: 'Kenyan MMF and bonds', value: 40, tone: 'chart3' },
+      { label: 'NSE shares', value: 20, tone: 'chart2' },
+      { label: 'Global shares fund', value: 30, tone: 'chart1' },
+      { label: 'Other (REIT, gold)', value: 10, tone: 'muted' },
+    ],
+  },
+  'index-basket': {
+    type: 'flow',
+    title: 'How one fund unit holds many companies',
+    desc: 'A flow from top to bottom. You buy one unit of an index fund or ETF. The fund pools money from many investors. It buys every company in the index in the index proportions. You get the index return, minus the fund fee.',
+    nodes: [
+      { label: 'You buy one unit', note: 'Through a broker or the fund manager' },
+      { label: 'The fund pools money', note: 'From many investors' },
+      { label: 'It buys the whole index', note: 'Hundreds or thousands of companies' },
+      { label: 'You get the index return', note: 'Minus the yearly fund fee' },
+    ],
+    edges: ['money in', 'follows fixed rules', 'gains and losses'],
+  },
+  'etf-vs-mutual': {
+    type: 'compare',
+    title: 'ETF compared with a traditional unit trust',
+    desc: 'Two columns. ETF: listed on a stock exchange, bought through a stockbroker, price moves during the trading day, needs a CDS or brokerage account. Unit trust: bought from and sold back to the fund manager, priced once a day, often allows small regular top-ups.',
+    columns: [
+      { heading: 'ETF', tone: 'chart1', items: ['Listed on an exchange', 'Buy through a stockbroker', 'Price moves all day', 'Needs a CDS or broker account'] },
+      { heading: 'Unit trust', tone: 'chart3', items: ['Buy from the manager', 'Sell back to the manager', 'Priced once a day', 'Easy small top-ups'] },
+    ],
+  },
+  'global-routes': {
+    type: 'ladder',
+    title: 'Routes to global investing from Kenya',
+    desc: 'A ladder of four routes from bottom to top. NSE-listed ETFs bought in shillings through a stockbroker. Global or offshore unit trusts from CMA-approved Kenyan managers. CMA-licensed Kenyan brokers that offer foreign markets. Foreign online brokers, regulated abroad, not by CMA. Higher rungs give more choice but less Kenyan oversight.',
+    lowLabel: 'More Kenyan oversight, priced in KES',
+    highLabel: 'More choice, less local protection',
+    rungs: [
+      { label: 'NSE-listed ETFs', note: 'Shillings, CDS account, local stockbroker' },
+      { label: 'Global unit trusts', note: 'From CMA-approved Kenyan fund managers' },
+      { label: 'Kenyan broker, foreign markets', note: 'CMA-licensed firm with an overseas partner' },
+      { label: 'Foreign online broker', note: 'Regulated abroad, not by CMA' },
+    ],
+  },
+  'feeder-etf-flow': {
+    type: 'flow',
+    title: 'How a feeder ETF reaches global shares',
+    desc: 'A flow from top to bottom. You buy feeder ETF units on the NSE in shillings through a stockbroker. The feeder ETF invests in a larger master fund abroad. The master fund holds shares in many companies around the world. Their value, in shillings, flows back to your units.',
+    nodes: [
+      { label: 'You, via a stockbroker', note: 'Buy units on the NSE in KES' },
+      { label: 'Feeder ETF (Kenya)', note: 'Collects investors’ money' },
+      { label: 'Master fund (abroad)', note: 'A large global index fund' },
+      { label: 'Global shares', note: 'Many companies worldwide' },
+    ],
+    edges: ['units bought', 'invests in', 'holds'],
+  },
+  'fx-return-bars': {
+    type: 'bars',
+    title: 'One dollar return, three shilling results',
+    desc: 'Three bars, each starting with KES 100,000 in an investment that gains 8 percent in dollars. If the dollar stays flat against the shilling, you end with KES 108,000. If the dollar strengthens 5 percent, about KES 113,400. If it weakens 5 percent, about KES 102,600.',
+    yLabel: 'KES',
+    yFormat: 'kes',
+    bars: [
+      { label: 'USD −5%', segments: [{ label: 'Starting amount', value: 100000, tone: 'chart3' }, { label: 'Gain in KES', value: 2600, tone: 'chart1' }] },
+      { label: 'USD flat', segments: [{ label: 'Starting amount', value: 100000, tone: 'chart3' }, { label: 'Gain in KES', value: 8000, tone: 'chart1' }] },
+      { label: 'USD +5%', segments: [{ label: 'Starting amount', value: 100000, tone: 'chart3' }, { label: 'Gain in KES', value: 13400, tone: 'chart1' }] },
+    ],
+  },
+  'currency-two-ways': {
+    type: 'compare',
+    title: 'What exchange-rate moves do to foreign assets',
+    desc: 'Two columns. When the dollar strengthens against the shilling: each dollar buys more shillings, your dollar assets are worth more in shillings, and the currency adds to your return. When the dollar weakens: each dollar buys fewer shillings, your assets are worth less in shillings, and the currency eats into your return.',
+    columns: [
+      { heading: 'Dollar strengthens', tone: 'chart1', items: ['1 USD buys more KES', 'Your assets are worth more KES', 'Currency adds to return'] },
+      { heading: 'Dollar weakens', tone: 'chart2', items: ['1 USD buys fewer KES', 'Your assets are worth fewer KES', 'Currency cuts your return'] },
+    ],
+  },
+  'global-cost-stack': {
+    type: 'flow',
+    title: 'Where money leaks when investing abroad',
+    desc: 'A flow from top to bottom showing costs. Your shillings first lose a little to the currency conversion spread, then to transfer or bank fees, then to broker commission when you buy, then to the yearly fund fee, and finally to withholding tax on dividends. What is left is your actual investment return.',
+    nodes: [
+      { label: 'Your shillings', note: 'For example KES 100,000' },
+      { label: 'Currency conversion', note: 'The spread between buy and sell rates' },
+      { label: 'Transfer and broker fees', note: 'Per transfer and per trade' },
+      { label: 'Fund fees and dividend tax', note: 'Every year you hold' },
+      { label: 'What you actually keep' },
+    ],
+    edges: ['spread', 'fees', 'yearly costs', 'net'],
+  },
+  'us-dividend-wht': {
+    type: 'bars',
+    title: 'Where a US dividend goes',
+    desc: 'One stacked bar for an illustrative 100 dollar dividend from a US company paid to a Kenyan resident. Using the 30 percent rate as of 2026-10, 30 dollars is withheld as US tax and 70 dollars reaches your account before any Kenyan tax or fees.',
+    yLabel: 'USD',
+    yFormat: 'plain',
+    bars: [
+      { label: 'USD 100 dividend', segments: [{ label: 'You receive', value: 70, tone: 'chart1' }, { label: 'US tax withheld', value: 30, tone: 'chart2' }] },
+    ],
+  },
+  'custody-chain': {
+    type: 'flow',
+    title: 'The custody chain behind a platform',
+    desc: 'A flow from top to bottom. You open an account in your own name with a platform or broker. The broker places your orders on an exchange. An independent custodian or depository holds the shares in your name, separate from the broker’s own money. A regulator supervises each link.',
+    nodes: [
+      { label: 'You', note: 'Account in your own name' },
+      { label: 'Platform or broker', note: 'Places your orders' },
+      { label: 'Custodian or depository', note: 'Holds your shares separately' },
+      { label: 'Regulator', note: 'Supervises each link' },
+    ],
+    edges: ['instructions', 'settles trades', 'oversight'],
+  },
+  'platform-checklist': {
+    type: 'compare',
+    title: 'Green flags and red flags for an investing platform',
+    desc: 'Two columns. Green flags: licensed by a named regulator you can look up, assets held in your name with a custodian, clear fee list, easy withdrawals. Red flags: guaranteed or fixed high returns, contact only through WhatsApp or Telegram, pressure to deposit fast, trouble withdrawing.',
+    columns: [
+      { heading: 'Green flags', tone: 'chart1', items: ['Regulator you can look up', 'Assets held in your name', 'Clear written fee list', 'Withdrawals work'] },
+      { heading: 'Red flags', tone: 'chart2', items: ['“Guaranteed” returns', 'Only WhatsApp or Telegram', 'Pressure to pay fast', 'Hard to withdraw'] },
+    ],
+  },
 } satisfies Record<string, DiagramSpec>;
 
 export type DiagramId = keyof typeof DIAGRAMS;

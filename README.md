@@ -6,7 +6,8 @@ Live at **https://investo.madebyfavor.com**
 Investo is a free, static web app with short, illustrated lessons, quick quizzes and calculators. It starts with the
 basics (saving vs investing, compound interest, inflation, risk, fees, scams) and then covers how Kenyans can invest:
 money market funds, Saccos, Treasury bills and bonds via CBK DhowCSD, NSE shares, REITs, pensions and tax at a conceptual
-level.
+level. Stage 3 adds global stocks and ETFs from Kenya: index funds, currency risk, foreign costs and taxes, and choosing a
+platform safely.
 
 There is no account and no server. Progress (XP, streaks, badges) stays in your browser, and you can export it to a JSON
 file and import it on another device. The app works offline once loaded.
@@ -25,9 +26,9 @@ about your own money, a licensed professional.
 
 | Stage | Track | Status |
 | ----- | ----- | ------ |
-| 1 | Investing basics | In progress |
-| 2 | Investing in Kenya | In progress |
-| 3 | Global stocks and ETFs from Kenya | Planned |
+| 1 | Investing basics | Available |
+| 2 | Investing in Kenya | Available |
+| 3 | Global stocks and ETFs from Kenya | Available |
 | 4 | Charts and trading with paper replay and risk tools | Planned |
 | 5 | Forex | Planned |
 | 6 | Crypto | Planned |
@@ -51,7 +52,7 @@ npm run e2e        # Playwright end-to-end + axe accessibility sweep (mobile/tab
 
 ## Content rules
 
-- Lessons live in `src/content/` (`basics.ts`, `kenya.ts`); tracks and calculators in `tracks.ts`.
+- Lessons live in `src/content/` (one file per track, e.g. `basics.ts`, `kenya.ts`, `global.ts`); tracks and calculators in `tracks.ts`.
 - **IDs are append-only.** Track, lesson, question, badge and tool IDs are listed in `src/content/ids.lock.ts`
   and a test fails if one disappears, so old backups keep working. Add new IDs; never rename or reuse old ones.
 - Every lesson has 2–4 original SVG diagrams (`src/diagrams/specs.ts`), each with a title, description and caption.

@@ -293,6 +293,45 @@ const emergency: ToolDef = {
   },
 };
 
+const fxReturn: ToolDef = {
+  id: 'fx-return',
+  fields: [
+    { key: 'amount', label: 'Amount invested', def: '100,000', min: 1, max: 1e9, ...KES_F },
+    { key: 'rate', label: 'Yearly return in dollars (your guess)', def: '7', min: -50, max: 50, ...PCT_F },
+    { key: 'fx', label: 'Yearly change in the dollar against the shilling', def: '2', min: -30, max: 30, ...PCT_F, hint: 'Positive means one dollar buys more shillings. Try negative values too.' },
+    { key: 'years', label: 'Years', def: '10', min: 1, max: 40, integer: true },
+  ],
+  compute: ({ amount, rate, fx, years }) => {
+    const kesRate = ((1 + rate / 100) * (1 + fx / 100) - 1) * 100;
+    const yearsArr = Array.from({ length: years + 1 }, (_, i) => i);
+    const grow = (r: number, y: number) => amount * Math.pow(1 + r / 100, y);
+    const flatEnd = grow(rate, years);
+    const kesEnd = grow(kesRate, years);
+    const diff = kesEnd - flatEnd;
+    return {
+      results: [
+        { label: 'Yearly return in shillings', value: pct(kesRate, 2) },
+        { label: `Value after ${plural(years, 'year')}`, value: kes(kesEnd) },
+        { label: 'If the exchange rate stayed the same', value: kes(flatEnd) },
+        { label: diff >= 0 ? 'Currency added' : 'Currency cost you', value: kes(Math.abs(diff)) },
+      ],
+      chartTitle: 'Value in shillings with and without a currency move',
+      chart: {
+        kind: 'line',
+        series: [
+          { label: 'With your currency change', tone: 'chart1', points: yearsArr.map((y) => [y, grow(kesRate, y)]) },
+          { label: 'Exchange rate unchanged', tone: 'chart2', points: yearsArr.map((y) => [y, grow(rate, y)]) },
+        ],
+        yFormat: 'kes',
+        xLabel: 'Years',
+        yLabel: 'KES',
+      },
+      desc: `A ${pct(rate, 1)} yearly return in dollars with the dollar changing ${pct(fx, 1)} a year against the shilling gives about ${pct(kesRate, 2)} a year in shillings. After ${plural(years, 'year')}, ${kes(amount)} becomes ${kes(kesEnd)}, compared with ${kes(flatEnd)} if the rate had not moved.`,
+      note: 'Assumes steady yearly changes. Real returns and exchange rates jump around and cannot be predicted reliably. Conversion fees are not included.',
+    };
+  },
+};
+
 export const TOOL_DEFS: Record<ToolId, ToolDef> = {
   compound,
   inflation,
@@ -300,4 +339,5 @@ export const TOOL_DEFS: Record<ToolId, ToolDef> = {
   'mmf-tbill': mmfTbill,
   bond,
   emergency,
+  'fx-return': fxReturn,
 };

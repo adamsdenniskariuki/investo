@@ -95,7 +95,8 @@ describe('lessons', () => {
   it('nextLesson walks through tracks in order', () => {
     expect(nextLesson('b01')?.id).toBe('b02');
     expect(nextLesson('b10')?.id).toBe('k01');
-    expect(nextLesson('k09')).toBeUndefined();
+    expect(nextLesson('k09')?.id).toBe('g01');
+    expect(nextLesson('g06')).toBeUndefined();
   });
 });
 
