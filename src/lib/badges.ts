@@ -33,6 +33,7 @@ export const BADGES: BadgeDef[] = [
   { id: 'global-done', title: 'Globetrotter', description: 'Finish every lesson in Global stocks and ETFs.', icon: '🌍', check: (p, c) => done(p, c.trackLessons['global']) },
   { id: 'trading-done', title: 'Chart reader', description: 'Finish every lesson in Charts and paper trading.', icon: '📊', check: (p, c) => done(p, c.trackLessons['trading']) },
   { id: 'forex-done', title: 'Currency wise', description: 'Finish every lesson in Forex.', icon: '💱', check: (p, c) => done(p, c.trackLessons['forex']) },
+  { id: 'crypto-done', title: 'Crypto clear-eyed', description: 'Finish every lesson in Crypto.', icon: '🔐', check: (p, c) => done(p, c.trackLessons['crypto']) },
   { id: 'paper-trader', title: 'Paper trader', description: 'Finish a full paper replay session.', icon: '📝', check: (p) => !!p.toolsUsed['replay'] },
 ];
 

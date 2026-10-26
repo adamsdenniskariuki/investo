@@ -2,6 +2,7 @@ import type { ToolId } from '../content/types';
 import type { BarSegment, LineSeries, ValueFormat } from '../diagrams/specs';
 import { bondCashflows, compoundGrowth, emergencyPlan, feeDrag, mmfReturn, purchasingPower, realRatePct, tbillReturn } from '../lib/finance';
 import { kes, parseNumber, pct } from '../lib/format';
+import { recoveryGainPct } from '../lib/market';
 
 export interface FieldSpec {
   key: string;
@@ -452,6 +453,44 @@ const leverage: ToolDef = {
   },
 };
 
+const crash: ToolDef = {
+  id: 'crash',
+  fields: [
+    { key: 'amount', label: 'Amount invested', def: '20,000', min: 100, max: 1e9, ...KES_F },
+    { key: 'fall', label: 'Price fall', def: '70', min: 1, max: 95, ...PCT_F, hint: 'Falls of 70% or more have happened many times in crypto.' },
+    { key: 'growth', label: 'Growth a year after the fall', def: '20', min: 1, max: 200, ...PCT_F, hint: 'A guess. Nobody knows whether or how fast a price will recover.' },
+  ],
+  compute: ({ amount, fall, growth }) => {
+    const low = amount * (1 - fall / 100);
+    const need = recoveryGainPct(fall);
+    const years = Math.log(amount / low) / Math.log(1 + growth / 100);
+    const horizon = Math.min(Math.max(Math.ceil(years) + 1, 3), 30);
+    const path: Array<[number, number]> = [[0, amount], [1, low]];
+    for (let k = 1; k <= horizon; k++) path.push([1 + k, low * Math.pow(1 + growth / 100, k)]);
+    const yearsText = years > 50 ? 'More than 50 years' : years < 1 ? 'Less than 1 year' : `About ${plural(Math.ceil(years), 'year')}`;
+    return {
+      results: [
+        { label: 'Value after the fall', value: kes(low) },
+        { label: 'Gain needed to get back', value: pct(need, 0) },
+        { label: `Time to recover at ${pct(growth, 0)} a year`, value: yearsText },
+      ],
+      chartTitle: 'A fall, then a steady recovery',
+      chart: {
+        kind: 'line',
+        series: [
+          { label: 'Your holding', tone: 'chart2', points: path },
+          { label: 'What you put in', tone: 'muted', points: path.map(([x]) => [x, amount] as [number, number]) },
+        ],
+        yFormat: 'kes',
+        xLabel: 'Years',
+        yLabel: 'KES',
+      },
+      desc: `${kes(amount)} that falls ${pct(fall, 0)} is worth ${kes(low)}. Getting back to ${kes(amount)} needs a gain of ${pct(need, 0)}. Growing ${pct(growth, 0)} a year, that takes ${yearsText.toLowerCase()}.`,
+      note: 'Real prices do not recover smoothly, and some crypto assets never recover at all. This is arithmetic, not a forecast.',
+    };
+  },
+};
+
 export const TOOL_DEFS: Record<Exclude<ToolId, 'replay'>, ToolDef> = {
   compound,
   inflation,
@@ -463,4 +502,5 @@ export const TOOL_DEFS: Record<Exclude<ToolId, 'replay'>, ToolDef> = {
   'position-size': positionSize,
   'risk-reward': riskReward,
   leverage,
+  crash,
 };

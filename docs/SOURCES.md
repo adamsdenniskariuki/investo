@@ -261,3 +261,36 @@ Checked: 2026-10
 - [CMA – Capital Markets (Online Foreign Exchange Trading) Regulations, 2017](https://www.cma.or.ke/wpfd_file/capital-markets-online-foreign-exchange-trading-regulations-2017/)
 - [CMA – Licensees and approved schemes portal](https://licensees.cma.or.ke/)
 - [CMA – Public caution against investment scams](https://www.cma.or.ke/public-caution-against-investment-scams/)
+
+## Crypto
+
+### c01 — What crypto assets are
+
+- [CBK – Public notice on virtual currencies such as Bitcoin (2015)](https://www.centralbank.go.ke/images/docs/media/Public_Notice_on_virtual_currencies_such_as_Bitcoin.pdf)
+- [European Supervisory Authorities – Warning to consumers on the risks of crypto-assets (2022)](https://www.esma.europa.eu/sites/default/files/library/esa_2022_15_joint_esas_warning_on_crypto-assets.pdf)
+
+### c02 — Volatility and crashes
+
+- [European Supervisory Authorities – Warning to consumers on the risks of crypto-assets (2022)](https://www.esma.europa.eu/sites/default/files/library/esa_2022_15_joint_esas_warning_on_crypto-assets.pdf)
+- [CBK – Public notice on virtual currencies such as Bitcoin (2015)](https://www.centralbank.go.ke/images/docs/media/Public_Notice_on_virtual_currencies_such_as_Bitcoin.pdf)
+
+### c03 — Wallets, keys and custody
+
+- [European Supervisory Authorities – Warning to consumers on the risks of crypto-assets (2022)](https://www.esma.europa.eu/sites/default/files/library/esa_2022_15_joint_esas_warning_on_crypto-assets.pdf)
+- [CBK – Public notice on the Virtual Asset Service Providers Act, 2025](https://www.centralbank.go.ke/uploads/press_releases/665231223_Public%20Notice%20on%20the%20Virtual%20Assets%20Service%20Providers%20Act%202025.pdf)
+
+### c04 — Crypto rules and tax in Kenya
+
+Checked: 2026-10
+
+- [Kenya Law – Virtual Asset Service Providers Act, 2025](https://new.kenyalaw.org/akn/ke/act/2025/20/eng@2025-11-04)
+- [CBK – Public notice on the Virtual Asset Service Providers Act, 2025](https://www.centralbank.go.ke/uploads/press_releases/665231223_Public%20Notice%20on%20the%20Virtual%20Assets%20Service%20Providers%20Act%202025.pdf)
+- [Capital Markets Authority (CMA)](https://www.cma.or.ke/)
+- [Kenya Revenue Authority (KRA)](https://www.kra.go.ke/)
+- [CBK – Public notice on virtual currencies such as Bitcoin (2015)](https://www.centralbank.go.ke/images/docs/media/Public_Notice_on_virtual_currencies_such_as_Bitcoin.pdf)
+
+### c05 — Crypto scams
+
+- [CMA – Public caution against investment scams](https://www.cma.or.ke/public-caution-against-investment-scams/)
+- [European Supervisory Authorities – Warning to consumers on the risks of crypto-assets (2022)](https://www.esma.europa.eu/sites/default/files/library/esa_2022_15_joint_esas_warning_on_crypto-assets.pdf)
+- [CBK – Public notice on virtual currencies such as Bitcoin (2015)](https://www.centralbank.go.ke/images/docs/media/Public_Notice_on_virtual_currencies_such_as_Bitcoin.pdf)

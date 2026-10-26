@@ -91,6 +91,13 @@ describe('calculations', () => {
     expect(out.results[3].value).toBe('5 months');
   });
 
+  it('crash: a 50% fall needs a 100% gain to recover', () => {
+    const out = TOOL_DEFS.crash.compute({ amount: 10_000, fall: 50, growth: 100 });
+    expect(out.results[0].value).toBe('KES 5,000');
+    expect(out.results[1].value).toBe('100%');
+    expect(out.results[2].value).toBe('About 1 year');
+  });
+
   it('fx-return: combines the dollar return with the currency change', () => {
     const out = TOOL_DEFS['fx-return'].compute({ amount: 100_000, rate: 8, fx: 5, years: 1 });
     expect(out.results[0].value).toBe('13.40%');
