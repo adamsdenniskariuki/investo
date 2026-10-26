@@ -9,6 +9,7 @@ export const LOCKED_LESSON_IDS = [
   'k01', 'k02', 'k03', 'k04', 'k05', 'k06', 'k07', 'k08', 'k09',
   'g01', 'g02', 'g03', 'g04', 'g05', 'g06',
   't01', 't02', 't03', 't04', 't05', 't06', 't07', 't08',
+  'f01', 'f02', 'f03', 'f04', 'f05',
 ];
 
 export const LOCKED_QUESTION_IDS = [
@@ -45,12 +46,18 @@ export const LOCKED_QUESTION_IDS = [
   't06-q1', 't06-q2', 't06-q3',
   't07-q1', 't07-q2', 't07-q3',
   't08-q1', 't08-q2', 't08-q3',
+  'f01-q1', 'f01-q2', 'f01-q3',
+  'f02-q1', 'f02-q2', 'f02-q3',
+  'f03-q1', 'f03-q2', 'f03-q3',
+  'f04-q1', 'f04-q2', 'f04-q3',
+  'f05-q1', 'f05-q2', 'f05-q3',
 ];
 
 export const LOCKED_BADGE_IDS = [
   'first-step', 'perfect-quiz', 'scam-spotter', 'basics-done', 'kenya-done',
   'streak-3', 'streak-7', 'toolkit', 'backed-up', 'xp-250',
   'global-done', 'trading-done', 'paper-trader',
-];
+    'forex-done',
+  ];
 
-export const LOCKED_TOOL_IDS = ['compound', 'inflation', 'fees', 'mmf-tbill', 'bond', 'emergency', 'fx-return', 'position-size', 'risk-reward', 'replay'];
+export const LOCKED_TOOL_IDS = ['compound', 'inflation', 'fees', 'mmf-tbill', 'bond', 'emergency', 'fx-return', 'position-size', 'risk-reward', 'replay', 'leverage'];

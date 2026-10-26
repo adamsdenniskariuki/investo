@@ -88,7 +88,7 @@ test('settings switch to dark mode and persist', async ({ page }) => {
 });
 
 test('coming-soon tracks and unknown pages are handled', async ({ page }) => {
-  await page.goto('/#/track/forex');
+  await page.goto('/#/track/crypto');
   await expect(page.getByText(/This stage is planned/)).toBeVisible();
   await page.goto('/#/does-not-exist');
   await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();

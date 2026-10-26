@@ -414,6 +414,44 @@ const riskReward: ToolDef = {
   },
 };
 
+const leverage: ToolDef = {
+  id: 'leverage',
+  fields: [
+    { key: 'deposit', label: 'Your deposit (margin)', def: '10,000', min: 100, max: 1e9, ...KES_F },
+    { key: 'lev', label: 'Leverage (times)', def: '100', min: 1, max: 1000, integer: true, hint: '100 means the position is 100 times your deposit.' },
+    { key: 'move', label: 'Price move against you', def: '0.5', min: 0, max: 20, ...PCT_F },
+  ],
+  compute: ({ deposit, lev, move }) => {
+    const position = deposit * lev;
+    const loss = (position * move) / 100;
+    const wipe = 100 / lev;
+    const left = deposit - loss;
+    const moves = Array.from({ length: 21 }, (_, i) => -2 + i * 0.2);
+    const line = (L: number) => moves.map((m) => [Number(m.toFixed(1)), (deposit * L * m) / 100] as [number, number]);
+    return {
+      results: [
+        { label: 'Position you control', value: kes(position) },
+        { label: `Loss on a ${pct(move, 2)} move against you`, value: kes(loss) },
+        { label: 'Share of your deposit lost', value: pct((loss / deposit) * 100, 0) },
+        { label: 'Move that wipes out the deposit', value: pct(wipe, 2) },
+      ],
+      chartTitle: 'Profit or loss for small price moves, with and without leverage',
+      chart: {
+        kind: 'line',
+        series: [
+          { label: `${lev}× leverage`, tone: 'chart2', points: line(lev) },
+          { label: 'No leverage (1×)', tone: 'chart1', points: line(1) },
+        ],
+        yFormat: 'kes',
+        xLabel: 'Price move (%)',
+        yLabel: 'KES',
+      },
+      desc: `With ${kes(deposit)} at ${lev}× leverage you control ${kes(position)}. A ${pct(move, 2)} move against you loses ${kes(loss)}, ${left >= 0 ? `leaving ${kes(left)}` : `which is more than your deposit by ${kes(-left)}`}. A move of just ${pct(wipe, 2)} wipes out the deposit. Without leverage the same move would lose ${kes((deposit * move) / 100)}.`,
+      note: 'Brokers usually close positions automatically (a margin call or stop-out) before the deposit is gone, but fast moves can skip past that point. Spreads and overnight fees are not included.',
+    };
+  },
+};
+
 export const TOOL_DEFS: Record<Exclude<ToolId, 'replay'>, ToolDef> = {
   compound,
   inflation,
@@ -424,4 +462,5 @@ export const TOOL_DEFS: Record<Exclude<ToolId, 'replay'>, ToolDef> = {
   'fx-return': fxReturn,
   'position-size': positionSize,
   'risk-reward': riskReward,
+  leverage,
 };

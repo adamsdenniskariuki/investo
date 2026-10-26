@@ -225,3 +225,39 @@ Checked: 2026-10
 
 - [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
 - [US SEC Investor.gov – Types of orders](https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders)
+
+## Forex
+
+### f01 — How the currency market works
+
+Checked: 2026-10
+
+- [BIS – Triennial Central Bank Survey of foreign exchange markets (2025)](https://www.bis.org/statistics/rpfx25.htm)
+- [CBK – Foreign exchange rates](https://www.centralbank.go.ke/rates/forex-exchange-rates/)
+
+### f02 — Pips, lots and spreads
+
+- [CMA – Capital Markets (Online Foreign Exchange Trading) Regulations, 2017](https://www.cma.or.ke/wpfd_file/capital-markets-online-foreign-exchange-trading-regulations-2017/)
+- [US SEC Investor.gov – Types of orders](https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders)
+
+### f03 — Leverage and margin
+
+Checked: 2026-10
+
+- [CMA – Capital Markets (Online Foreign Exchange Trading) Regulations, 2017](https://www.cma.or.ke/wpfd_file/capital-markets-online-foreign-exchange-trading-regulations-2017/)
+- [ESMA – Restrictions on CFDs for retail investors (2018)](https://www.esma.europa.eu/press-news/esma-news/esma-agrees-prohibit-binary-options-and-restrict-cfds-protect-retail-investors)
+
+### f04 — Why most retail forex traders lose
+
+Checked: 2026-10
+
+- [ESMA – Restrictions on CFDs for retail investors (2018)](https://www.esma.europa.eu/press-news/esma-news/esma-agrees-prohibit-binary-options-and-restrict-cfds-protect-retail-investors)
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+
+### f05 — Licensed brokers and forex scams in Kenya
+
+Checked: 2026-10
+
+- [CMA – Capital Markets (Online Foreign Exchange Trading) Regulations, 2017](https://www.cma.or.ke/wpfd_file/capital-markets-online-foreign-exchange-trading-regulations-2017/)
+- [CMA – Licensees and approved schemes portal](https://licensees.cma.or.ke/)
+- [CMA – Public caution against investment scams](https://www.cma.or.ke/public-caution-against-investment-scams/)
