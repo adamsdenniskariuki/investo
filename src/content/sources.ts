@@ -56,4 +56,8 @@ export const SRC = {
     label: 'CBK – Public notice on virtual currencies such as Bitcoin (2015)',
     url: 'https://www.centralbank.go.ke/images/docs/media/Public_Notice_on_virtual_currencies_such_as_Bitcoin.pdf',
   },
+  esasCrypto: {
+    label: 'European Supervisory Authorities – Warning to consumers on the risks of crypto-assets (2022)',
+    url: 'https://www.esma.europa.eu/sites/default/files/library/esa_2022_15_joint_esas_warning_on_crypto-assets.pdf',
+  },
 } satisfies Record<string, Source>;

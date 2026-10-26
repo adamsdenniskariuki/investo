@@ -4,6 +4,7 @@ import { KENYA } from './kenya';
 import { GLOBAL } from './global';
 import { TRADING } from './trading';
 import { FOREX } from './forex';
+import { CRYPTO } from './crypto';
 
 /** Track ids are append-only; never rename. */
 export const TRACKS: Track[] = [
@@ -12,7 +13,7 @@ export const TRACKS: Track[] = [
   { id: 'global', stage: 3, title: 'Global stocks and ETFs', tagline: 'Investing beyond Kenya: currencies, platforms and costs.', status: 'available', lessons: GLOBAL },
   { id: 'trading', stage: 4, title: 'Charts and paper trading', tagline: 'Read charts and practise on made-up markets with risk tools — paper money only.', status: 'available', lessons: TRADING },
   { id: 'forex', stage: 5, title: 'Forex', tagline: 'How currency markets work and why most retail traders lose.', status: 'available', lessons: FOREX },
-  { id: 'crypto', stage: 6, title: 'Crypto', tagline: 'What crypto assets are, the risks, and how to avoid scams.', status: 'coming-soon', lessons: [] },
+  { id: 'crypto', stage: 6, title: 'Crypto', tagline: 'What crypto assets are, the risks, and how to avoid scams.', status: 'available', lessons: CRYPTO },
 ];
 
 export const TOOLS: { id: ToolId; title: string; summary: string; lesson: string }[] = [
@@ -27,7 +28,8 @@ export const TOOLS: { id: ToolId; title: string; summary: string; lesson: string
   { id: 'risk-reward', title: 'Win rate and reward/risk', summary: 'The average result per trade once wins, losses and fees are counted.', lesson: 't06' },
   { id: 'replay', title: 'Paper replay', summary: 'Practise on a made-up market with paper money, then review your session.', lesson: 't08' },
   { id: 'leverage', title: 'Leverage and margin', summary: 'How small price moves turn into big gains or losses with leverage.', lesson: 'f03' },
-];
+    { id: 'crash', title: 'Crash and recovery', summary: 'How deep a fall is, and how long getting back could take.', lesson: 'c02' },
+  ];
 
 export const TOOL_IDS = TOOLS.map((t) => t.id);
 

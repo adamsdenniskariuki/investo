@@ -87,9 +87,9 @@ test('settings switch to dark mode and persist', async ({ page }) => {
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
-test('coming-soon tracks and unknown pages are handled', async ({ page }) => {
-  await page.goto('/#/track/crypto');
-  await expect(page.getByText(/This stage is planned/)).toBeVisible();
+test('unknown pages are handled', async ({ page }) => {
+  await page.goto('/#/track/not-a-track');
+  await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
   await page.goto('/#/does-not-exist');
   await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
 });

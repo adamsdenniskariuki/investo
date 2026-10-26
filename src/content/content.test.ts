@@ -98,7 +98,8 @@ describe('lessons', () => {
     expect(nextLesson('k09')?.id).toBe('g01');
     expect(nextLesson('g06')?.id).toBe('t01');
     expect(nextLesson('t08')?.id).toBe('f01');
-    expect(nextLesson('f05')).toBeUndefined();
+    expect(nextLesson('f05')?.id).toBe('c01');
+    expect(nextLesson('c05')).toBeUndefined();
   });
 });
 

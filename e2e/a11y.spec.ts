@@ -43,6 +43,8 @@ const PAGES: Array<{ name: string; open: (page: Page) => Promise<void> }> = [
   { name: 'candles lesson', open: (p) => p.goto('/#/lesson/t02').then(() => undefined) },
   { name: 'forex track', open: (p) => p.goto('/#/track/forex').then(() => undefined) },
   { name: 'leverage tool', open: (p) => p.goto('/#/tools/leverage').then(() => undefined) },
+  { name: 'crypto track', open: (p) => p.goto('/#/track/crypto').then(() => undefined) },
+  { name: 'crash tool', open: (p) => p.goto('/#/tools/crash').then(() => undefined) },
   {
     name: 'paper replay finished',
     open: async (p) => {

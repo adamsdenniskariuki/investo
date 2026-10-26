@@ -967,6 +967,121 @@ export const DIAGRAMS = {
     ],
     edges: ['found?', 'details match?', 'still unsure?'],
   },
+  // ── Crypto ────────────────────────────────────────────────────────────────
+  'blockchain-chain': {
+    type: 'flow',
+    title: 'How a blockchain records a payment',
+    desc: 'A flow from top to bottom. Someone signs a payment with their private key. Computers on the network check that it is valid. Valid payments are grouped into a block. The block is linked to the one before it, so changing old records would mean redoing every later block. Thousands of computers keep a copy of the whole chain.',
+    nodes: [
+      { label: 'You sign a payment', note: 'With your private key' },
+      { label: 'Network checks it', note: 'Is it valid? Is it spent?' },
+      { label: 'Grouped into a block' },
+      { label: 'Linked to earlier blocks', note: 'Hard to change history' },
+      { label: 'Copies kept worldwide' },
+    ],
+    edges: ['broadcast', 'valid', 'added', 'shared'],
+  },
+  'crypto-types': {
+    type: 'compare',
+    title: 'Common kinds of crypto asset',
+    desc: 'Three columns. Coins such as Bitcoin and Ether: run their own networks, prices swing widely, no company or government backs them. Stablecoins: aim to track a currency such as the US dollar, depend on the issuer holding enough reserves, and have broken their peg before. Other tokens and meme coins: thousands exist, many have little or no use, and many have gone to nearly zero.',
+    columns: [
+      { heading: 'Coins (e.g. Bitcoin)', tone: 'chart1', items: ['Own network', 'Big price swings', 'No one backs the value'] },
+      { heading: 'Stablecoins', tone: 'chart3', items: ['Aim to track e.g. USD', 'Rely on the issuer’s reserves', 'Some have lost their peg'] },
+      { heading: 'Tokens and meme coins', tone: 'chart2', items: ['Thousands exist', 'Often little real use', 'Many fall to near zero'] },
+    ],
+  },
+  'crypto-swings': {
+    type: 'lines',
+    title: 'A made-up crypto price with boom and bust',
+    desc: 'A line chart of a made-up crypto price over six years, starting at 100. It soars to about 900, crashes by more than 80 percent to about 150, climbs again to about 700, then falls by about 75 percent to about 170. The pattern is typical of crypto history, but the numbers are invented.',
+    xLabel: 'Year',
+    yLabel: 'Price',
+    yFormat: 'plain',
+    series: [
+      {
+        label: 'Made-up coin',
+        tone: 'chart2',
+        points: [[0, 100], [0.5, 250], [1, 600], [1.3, 900], [1.6, 450], [2, 180], [2.5, 150], [3, 220], [3.5, 400], [4, 700], [4.4, 520], [4.8, 260], [5.2, 170], [5.6, 210], [6, 240]],
+      },
+    ],
+  },
+  'crypto-risk-ladder': {
+    type: 'ladder',
+    title: 'Where crypto sits on the risk ladder',
+    desc: 'A ladder from lower to higher risk. At the bottom, money market funds and Treasury bills. Then bonds. Then a broad share index fund. Then single shares. At the top, crypto assets, where falls of 70 percent or more have happened several times and some coins have gone to zero.',
+    lowLabel: 'Lower risk',
+    highLabel: 'Higher risk',
+    rungs: [
+      { label: 'MMFs and T-bills', note: 'Small, steady returns' },
+      { label: 'Bonds', note: 'Prices move with rates' },
+      { label: 'Share index funds', note: 'Can fall 30–50%' },
+      { label: 'Single shares', note: 'One company can fail' },
+      { label: 'Crypto assets', note: 'Falls of 70%+ and coins at zero' },
+    ],
+  },
+  'custody-compare': {
+    type: 'compare',
+    title: 'Keeping crypto on an exchange compared with your own wallet',
+    desc: 'Two columns. On an exchange: easy to use and you can recover a forgotten password, but the exchange holds the keys, so if it is hacked, freezes withdrawals or collapses, you may lose your coins. In your own wallet: you hold the keys and nobody can freeze them, but if you lose your recovery phrase or someone tricks you into sharing it, the coins are gone for good.',
+    columns: [
+      { heading: 'On an exchange', tone: 'chart3', items: ['Easy to use', 'Password can be reset', 'Exchange holds the keys', 'Hack or collapse risk'] },
+      { heading: 'Your own wallet', tone: 'chart1', items: ['You hold the keys', 'Nobody can freeze it', 'Lose the phrase, lose it all', 'No one to call for help'] },
+    ],
+  },
+  'keys-flow': {
+    type: 'flow',
+    title: 'Recovery phrase, private key and address',
+    desc: 'A flow from top to bottom. A recovery phrase of 12 or 24 words creates your private keys. A private key signs payments and must stay secret. From it comes a public address, which is safe to share so people can pay you. Anyone with your recovery phrase controls all your coins.',
+    nodes: [
+      { label: 'Recovery phrase', note: '12 or 24 words — never share' },
+      { label: 'Private key', note: 'Signs payments — secret' },
+      { label: 'Public address', note: 'Safe to share to get paid' },
+    ],
+    edges: ['creates', 'gives'],
+  },
+  'kenya-crypto-regulators': {
+    type: 'compare',
+    title: 'Who oversees crypto businesses in Kenya',
+    desc: 'Two columns, under the Virtual Asset Service Providers Act, 2025. The Central Bank of Kenya covers services such as virtual asset wallets, custody and payments. The Capital Markets Authority covers services such as virtual asset exchanges, investment advice and token offerings. Firms must be licensed before serving the public.',
+    columns: [
+      { heading: 'Central Bank of Kenya', tone: 'chart1', items: ['Wallets and custody', 'Payment services', 'Stablecoin issuers'] },
+      { heading: 'Capital Markets Authority', tone: 'chart3', items: ['Exchanges and brokers', 'Investment advice', 'Token offerings'] },
+    ],
+  },
+  'kenya-crypto-timeline': {
+    type: 'flow',
+    title: 'Crypto rules in Kenya over time',
+    desc: 'Three milestones from top to bottom. In 2015 the Central Bank of Kenya warned that virtual currencies are not legal tender and are unregulated. In 2023 a 3 percent digital asset tax was introduced. In 2025 that tax was repealed, and the Virtual Asset Service Providers Act came into force in November 2025, bringing crypto businesses under licensing.',
+    nodes: [
+      { label: '2015: CBK warning', note: 'Not legal tender, unregulated' },
+      { label: '2023: digital asset tax', note: '3% on transfers' },
+      { label: '2025: VASP Act in force', note: 'Licensing; that tax repealed' },
+    ],
+    edges: ['8 years', '2 years'],
+  },
+  'crypto-scam-flow': {
+    type: 'flow',
+    title: 'How a typical crypto investment scam unfolds',
+    desc: 'A flow from top to bottom. A friendly stranger or a fake celebrity post gets in touch online. They point you to an investment app or website that shows big profits. A small first withdrawal works, to build trust. You deposit more, sometimes borrowing. When you try to take out a large amount, you are told to pay a fee or tax first, and the money is never returned.',
+    nodes: [
+      { label: 'Friendly contact online', note: 'Social media, dating app, wrong number' },
+      { label: 'Fake app shows profits' },
+      { label: 'Small withdrawal works', note: 'To build trust' },
+      { label: 'You deposit much more' },
+      { label: '“Pay a fee to withdraw”', note: 'The money is gone' },
+    ],
+    edges: ['introduces', 'test', 'trust', 'blocked'],
+  },
+  'crypto-scam-signs': {
+    type: 'compare',
+    title: 'Crypto red flags compared with safer habits',
+    desc: 'Two columns. Red flags: guaranteed or fixed daily returns, anyone asking for your recovery phrase, pressure to act fast, being asked to pay a fee before withdrawing, and celebrity endorsements on social media. Safer habits: check the firm is licensed in Kenya, never share your recovery phrase, start only with money you can afford to lose, and walk away from anything that rushes you.',
+    columns: [
+      { heading: 'Red flags', tone: 'chart2', items: ['Guaranteed returns', 'Asks for your recovery phrase', 'Pressure to act now', 'Fee to withdraw', 'Celebrity “endorsements”'] },
+      { heading: 'Safer habits', tone: 'chart1', items: ['Check the licence', 'Never share your phrase', 'Only money you can lose', 'Walk away if rushed'] },
+    ],
+  },
 } satisfies Record<string, DiagramSpec>;
 
 export type DiagramId = keyof typeof DIAGRAMS;

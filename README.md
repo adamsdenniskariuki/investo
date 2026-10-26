@@ -9,7 +9,8 @@ money market funds, Saccos, Treasury bills and bonds via CBK DhowCSD, NSE shares
 level. Stage 3 adds global stocks and ETFs from Kenya: index funds, currency risk, foreign costs and taxes, and choosing a
 platform safely. Stage 4 teaches charts and trading risk honestly: candlesticks, randomness, orders and spreads,
 position sizing, win rate and reward/risk, drawdowns, and a paper replay on made-up markets — never real signals. Stage 5 explains forex: currency pairs, pips and lots,
-leverage and margin (with a leverage calculator), why most retail traders lose, and how to check a CMA-licensed broker.
+leverage and margin (with a leverage calculator), why most retail traders lose, and how to check a CMA-licensed broker. Stage 6 covers crypto: what crypto assets are, volatility and crashes (with a crash
+and recovery calculator), wallets and keys, Kenya's 2025 licensing law and tax at a high level, and common crypto scams.
 
 There is no account and no server. Progress (XP, streaks, badges) stays in your browser, and you can export it to a JSON
 file and import it on another device. The app works offline once loaded.
@@ -33,7 +34,7 @@ about your own money, a licensed professional.
 | 3 | Global stocks and ETFs from Kenya | Available |
 | 4 | Charts and trading with paper replay and risk tools | Available |
 | 5 | Forex | Available |
-| 6 | Crypto | Planned |
+| 6 | Crypto | Available |
 
 ## Local development
 
@@ -54,7 +55,7 @@ npm run e2e        # Playwright end-to-end + axe accessibility sweep (mobile/tab
 
 ## Content rules
 
-- Lessons live in `src/content/` (one file per track, e.g. `basics.ts`, `kenya.ts`, `global.ts`, `trading.ts`, `forex.ts`); tracks and calculators in `tracks.ts`.
+- Lessons live in `src/content/` (one file per track, e.g. `basics.ts`, `kenya.ts`, `global.ts`, `trading.ts`, `forex.ts`, `crypto.ts`); tracks and calculators in `tracks.ts`.
 - **IDs are append-only.** Track, lesson, question, badge and tool IDs are listed in `src/content/ids.lock.ts`
   and a test fails if one disappears, so old backups keep working. Add new IDs; never rename or reuse old ones.
 - Every lesson has 2–4 original SVG diagrams (`src/diagrams/specs.ts`), each with a title, description and caption.
