@@ -136,3 +136,44 @@ Checked: 2026-10
 - [Kenya Revenue Authority (KRA)](https://www.kra.go.ke/)
 - [CBK – Government securities](https://www.centralbank.go.ke/securities/)
 - [RBA – Tax Laws (Amendment) Act 2024 and the retirement sector](https://www.rba.go.ke/the-tax-laws-amendment-act-2024-a-detailed-analysis-of-the-amendments-benefiting-the-retirement-benefits-sector/)
+
+## Global stocks and ETFs
+
+### g01 — Why look beyond Kenya?
+
+- [Nairobi Securities Exchange (NSE)](https://www.nse.co.ke/)
+- [Capital Markets Authority (CMA)](https://www.cma.or.ke/)
+
+### g02 — Shares, index funds and ETFs
+
+- [US SEC Investor.gov – Index fund](https://www.investor.gov/introduction-investing/investing-basics/glossary/index-fund)
+- [US SEC Investor.gov – Exchange-traded fund (ETF)](https://www.investor.gov/introduction-investing/investing-basics/glossary/exchange-traded-fund-etf)
+- [Nairobi Securities Exchange (NSE)](https://www.nse.co.ke/)
+
+### g03 — Ways to invest globally from Kenya
+
+Checked: 2026-10
+
+- [NSE – Satrix MSCI World Feeder ETF listing announcement](https://www.nse.co.ke/wp-content/uploads/Investors-on-Kenyas-securities-exchange-will-soon-get-access-to-trade-global-markets-as-Satrix-lists-MSCI-World-Feeder-ETF-on-the-NSE.pdf)
+- [Nairobi Securities Exchange (NSE)](https://www.nse.co.ke/)
+- [CMA – Licensees and approved schemes portal](https://licensees.cma.or.ke/)
+- [Central Bank of Kenya (CBK)](https://www.centralbank.go.ke/)
+
+### g04 — Currency risk
+
+- [CBK – Foreign exchange rates](https://www.centralbank.go.ke/rates/forex-exchange-rates/)
+- [Central Bank of Kenya (CBK)](https://www.centralbank.go.ke/)
+
+### g05 — Costs and taxes abroad
+
+Checked: 2026-10
+
+- [IRS – About Form W-8BEN](https://www.irs.gov/forms-pubs/about-form-w-8-ben)
+- [IRS – Some nonresidents with US assets must file estate tax returns](https://www.irs.gov/individuals/international-taxpayers/some-nonresidents-with-us-assets-must-file-estate-tax-returns)
+- [Kenya Revenue Authority (KRA)](https://www.kra.go.ke/)
+
+### g06 — Choosing a platform safely
+
+- [CMA – Licensees and approved schemes portal](https://licensees.cma.or.ke/)
+- [FINRA BrokerCheck (US brokers)](https://brokercheck.finra.org/)
+- [Capital Markets Authority (CMA)](https://www.cma.or.ke/)

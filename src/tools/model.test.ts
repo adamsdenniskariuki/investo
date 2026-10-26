@@ -90,4 +90,14 @@ describe('calculations', () => {
     expect(out.results[0].value).toBe('KES 30,000');
     expect(out.results[3].value).toBe('5 months');
   });
+
+  it('fx-return: combines the dollar return with the currency change', () => {
+    const out = TOOL_DEFS['fx-return'].compute({ amount: 100_000, rate: 8, fx: 5, years: 1 });
+    expect(out.results[0].value).toBe('13.40%');
+    expect(out.results[1].value).toBe('KES 113,400');
+    expect(out.results[2].value).toBe('KES 108,000');
+    expect(out.results[3].label).toBe('Currency added');
+    const down = TOOL_DEFS['fx-return'].compute({ amount: 100_000, rate: 8, fx: -5, years: 1 });
+    expect(down.results[3].label).toBe('Currency cost you');
+  });
 });

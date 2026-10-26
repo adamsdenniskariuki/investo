@@ -1,6 +1,6 @@
 import type { DiagramId } from '../diagrams/specs';
 
-export type ToolId = 'compound' | 'inflation' | 'fees' | 'mmf-tbill' | 'bond' | 'emergency';
+export type ToolId = 'compound' | 'inflation' | 'fees' | 'mmf-tbill' | 'bond' | 'emergency' | 'fx-return';
 
 export type Block =
   | { kind: 'text'; heading: string; body: string[] }

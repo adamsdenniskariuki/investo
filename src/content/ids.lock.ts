@@ -7,6 +7,7 @@ export const LOCKED_TRACK_IDS = ['basics', 'kenya', 'global', 'trading', 'forex'
 export const LOCKED_LESSON_IDS = [
   'b01', 'b02', 'b03', 'b04', 'b05', 'b06', 'b07', 'b08', 'b09', 'b10',
   'k01', 'k02', 'k03', 'k04', 'k05', 'k06', 'k07', 'k08', 'k09',
+  'g01', 'g02', 'g03', 'g04', 'g05', 'g06',
 ];
 
 export const LOCKED_QUESTION_IDS = [
@@ -29,11 +30,18 @@ export const LOCKED_QUESTION_IDS = [
   'k07-q1', 'k07-q2', 'k07-q3',
   'k08-q1', 'k08-q2', 'k08-q3',
   'k09-q1', 'k09-q2', 'k09-q3',
+  'g01-q1', 'g01-q2', 'g01-q3',
+  'g02-q1', 'g02-q2', 'g02-q3',
+  'g03-q1', 'g03-q2', 'g03-q3',
+  'g04-q1', 'g04-q2', 'g04-q3',
+  'g05-q1', 'g05-q2', 'g05-q3',
+  'g06-q1', 'g06-q2', 'g06-q3',
 ];
 
 export const LOCKED_BADGE_IDS = [
   'first-step', 'perfect-quiz', 'scam-spotter', 'basics-done', 'kenya-done',
   'streak-3', 'streak-7', 'toolkit', 'backed-up', 'xp-250',
+  'global-done',
 ];
 
-export const LOCKED_TOOL_IDS = ['compound', 'inflation', 'fees', 'mmf-tbill', 'bond', 'emergency'];
+export const LOCKED_TOOL_IDS = ['compound', 'inflation', 'fees', 'mmf-tbill', 'bond', 'emergency', 'fx-return'];
