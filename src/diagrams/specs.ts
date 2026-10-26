@@ -1,4 +1,5 @@
 import { bondPrice, compoundGrowth, purchasingPower, type GrowthPoint } from '../lib/finance';
+import { makeMarket, recoveryGainPct, type Candle } from '../lib/market';
 
 export type Tone = 'chart1' | 'chart2' | 'chart3' | 'muted';
 export type ValueFormat = 'kes' | 'pct' | 'plain';
@@ -24,8 +25,16 @@ export interface TimelineEvent {
   size?: number;
 }
 
+export interface CandleMark {
+  /** Bar index the label points at. */
+  at: number;
+  label: string;
+  kind: 'buy' | 'sell' | 'note';
+}
+
 export type DiagramBody =
-  | { type: 'lines'; xLabel: string; yLabel: string; yFormat: ValueFormat; xFormat?: ValueFormat; series: LineSeries[] }
+  | { type: 'candles'; yLabel: string; candles: Candle[]; marks?: CandleMark[]; level?: { value: number; label: string } }
+  | { type: 'lines'; xLabel: string; yLabel: string; yFormat: ValueFormat; xFormat?: ValueFormat; series: LineSeries[]; zeroBase?: boolean }
   | { type: 'bars'; yLabel: string; yFormat: ValueFormat; bars: Array<{ label: string; segments: BarSegment[] }> }
   | { type: 'ladder'; lowLabel: string; highLabel: string; rungs: Array<{ label: string; note: string }> }
   | { type: 'flow'; nodes: Array<{ label: string; note?: string }>; edges: string[] }
@@ -673,6 +682,180 @@ export const DIAGRAMS = {
     columns: [
       { heading: 'Green flags', tone: 'chart1', items: ['Regulator you can look up', 'Assets held in your name', 'Clear written fee list', 'Withdrawals work'] },
       { heading: 'Red flags', tone: 'chart2', items: ['“Guaranteed” returns', 'Only WhatsApp or Telegram', 'Pressure to pay fast', 'Hard to withdraw'] },
+    ],
+  },
+  // ── Trading ──────────────────────────────────────────────
+  'invest-vs-trade': {
+    type: 'compare',
+    title: 'Investing compared with trading',
+    desc: 'Two columns. Investing: own businesses or funds for years, returns come from company growth, dividends and interest, few decisions and low costs. Trading: buy and sell over days or minutes, aim to profit from price moves, many decisions, costs on every trade, and most short-term traders lose money.',
+    columns: [
+      { heading: 'Investing', tone: 'chart1', items: ['Hold for years', 'Gain from growth and income', 'Few decisions', 'Low costs'] },
+      { heading: 'Trading', tone: 'chart2', items: ['Hold for minutes to weeks', 'Gain only from price moves', 'Many decisions', 'Costs on every trade'] },
+    ],
+  },
+  'day-trader-results': {
+    type: 'bars',
+    title: 'What happened to persistent day traders in one large study',
+    desc: 'One stacked bar from a study of people who day traded Brazilian equity futures for more than 300 days between 2013 and 2015.     About 97 percent lost money and only about 3 percent did not.',
+    yLabel: '% of traders',
+    yFormat: 'pct',
+    bars: [
+          { label: 'Day traders, 300+ days', segments: [{ label: 'Lost money', value: 97, tone: 'chart2' }, { label: 'Did not lose', value: 3, tone: 'chart1' }] },
+    ],
+  },
+  'candle-anatomy': {
+    type: 'compare',
+    title: 'How to read a candlestick',
+    desc: 'Two columns. An up candle, drawn hollow: the bottom of the body is the open, the top is the close, so the price rose. A down candle, drawn filled: the top of the body is the open and the bottom is the close, so the price fell. On both, the thin wicks reach the highest and lowest prices of the period.',
+    columns: [
+      { heading: 'Up candle (hollow)', tone: 'chart1', items: ['Body bottom = open', 'Body top = close', 'Price rose', 'Wicks = high and low'] },
+      { heading: 'Down candle (filled)', tone: 'chart2', items: ['Body top = open', 'Body bottom = close', 'Price fell', 'Wicks = high and low'] },
+    ],
+  },
+  'candles-sample': {
+    type: 'candles',
+    title: 'Twelve days of a made-up share price',
+    desc: 'A candlestick chart of twelve made-up days, price between about 49 and 56 shillings. It rises for two days, dips, jumps strongly on day four, then day five shows a long upper wick where the price spiked but closed near its open. Three down days follow, day eight has a long lower wick where buyers pushed the price back up, and the last four days drift higher.',
+    yLabel: 'KES per share',
+    candles: [
+      [50, 51.2, 49.6, 51], [51, 52.4, 50.8, 52.1], [52.1, 52.6, 51.2, 51.5], [51.5, 53.8, 51.4, 53.5],
+      [53.5, 55.6, 53.3, 53.7], [53.7, 54, 51.8, 52.2], [52.2, 52.5, 50.4, 50.9], [50.9, 51.1, 48.6, 50.8],
+      [50.8, 52.2, 50.6, 52], [52, 52.3, 51.6, 51.9], [51.9, 53, 51.7, 52.8], [52.8, 53.4, 52.1, 53.1],
+    ].map(([o, h, l, c]) => ({ o, h, l, c })),
+    marks: [
+      { at: 4, label: 'Long upper wick', kind: 'note' },
+      { at: 7, label: 'Long lower wick', kind: 'note' },
+    ],
+  },
+  'random-walks': {
+    type: 'lines',
+    title: 'Three price paths made from pure chance',
+    desc: 'A line chart of three made-up price paths over 120 days, each starting at 100 and built only from random coin-flip moves with no trend built in. Even so, they wander apart and show what look like trends, peaks and breakouts — patterns that predict nothing.',
+    xLabel: 'Days',
+    yLabel: 'Price',
+    yFormat: 'plain',
+    zeroBase: false,
+    series: [3, 11, 29].map((seed, i) => {
+      const m = makeMarket(seed, 121, 100);
+      return { label: `Random path ${i + 1}`, tone: (['chart1', 'chart2', 'chart3'] as Tone[])[i], points: m.map((k, d) => [d, k.c] as [number, number]) };
+    }),
+  },
+  'pattern-traps': {
+    type: 'compare',
+    title: 'Chart patterns and what may really be going on',
+    desc: 'Two columns. What it looks like: a clear trend, a pattern that worked last time, an indicator that called the top. What may be true: random moves can form trends, you remember the hits and forget the misses, and an indicator fitted to past prices can fail on new ones.',
+    columns: [
+      { heading: 'What it looks like', tone: 'chart2', items: ['A clear trend', 'A pattern that worked before', 'An indicator that called it'] },
+      { heading: 'What may be true', tone: 'chart1', items: ['Chance can make trends', 'We remember hits, forget misses', 'Fitted to the past, fails later'] },
+    ],
+  },
+  'order-types': {
+    type: 'compare',
+    title: 'Three common order types',
+    desc: 'Three columns. A market order buys or sells now at the best available price, so the price is not certain. A limit order sets the worst price you accept, so it may not fill. A stop order turns into a sell order once the price falls to a level you choose, and in a fast fall can fill below it.',
+    columns: [
+      { heading: 'Market', tone: 'chart1', items: ['Trade now', 'Best price available', 'Price not certain'] },
+      { heading: 'Limit', tone: 'chart3', items: ['Your price or better', 'May not fill', 'Controls price'] },
+      { heading: 'Stop', tone: 'chart2', items: ['Triggers at a level', 'Limits a loss', 'Can fill worse'] },
+    ],
+  },
+  'bid-ask-spread': {
+    type: 'ladder',
+    title: 'The bid, the ask and the spread',
+    desc: 'A ladder of three prices for a made-up share. At the bottom, the bid of KES 49.90 is the best price buyers offer, where you can sell. In the middle, the mid price of KES 50.00. At the top, the ask of KES 50.10 is the best price sellers want, where you buy. Buying and selling straight away loses the 20 cent spread.',
+    lowLabel: 'Lower price',
+    highLabel: 'Higher price',
+    rungs: [
+      { label: 'Bid: KES 49.90', note: 'Best price buyers offer — you sell here' },
+      { label: 'Mid: KES 50.00', note: 'Halfway, often shown on charts' },
+      { label: 'Ask: KES 50.10', note: 'Best price sellers want — you buy here' },
+    ],
+  },
+  'risk-per-trade': {
+    type: 'bars',
+    title: 'Ten losses in a row at different risk levels',
+    desc: 'Three bars starting from a KES 100,000 practice account after ten losing trades in a row. Risking 1 percent of the account per trade leaves about KES 90,400. Risking 5 percent leaves about KES 59,900. Risking 10 percent leaves about KES 34,900.',
+    yLabel: 'KES',
+    yFormat: 'kes',
+    bars: [1, 5, 10].map((r) => {
+      const left = 100000 * Math.pow(1 - r / 100, 10);
+      return { label: `${r}% a trade`, segments: [{ label: 'Left', value: left, tone: 'chart1' as Tone }, { label: 'Lost', value: 100000 - left, tone: 'chart2' as Tone }] };
+    }),
+  },
+  'position-size-flow': {
+    type: 'flow',
+    title: 'Working out a position size',
+    desc: 'A flow from top to bottom. Start with the account size, for example KES 100,000. Choose the most you will risk on one trade, for example 1 percent, which is KES 1,000. Decide where your stop is, for example KES 2 below your entry price. Divide KES 1,000 by KES 2 to get 500 shares.',
+    nodes: [
+      { label: 'Account: KES 100,000' },
+      { label: 'Risk 1% = KES 1,000', note: 'The most you accept losing on this trade' },
+      { label: 'Stop KES 2 below entry', note: 'Where the idea is proven wrong' },
+      { label: 'Size: 1,000 ÷ 2 = 500 shares' },
+    ],
+    edges: ['× risk %', 'distance to stop', '÷'],
+  },
+  'breakeven-win-rate': {
+    type: 'bars',
+    title: 'Win rate needed to break even',
+    desc: 'Three bars showing the share of trades you must win just to break even, before costs. If wins and losses are the same size, 50 percent. If wins are twice the size of losses, about 33 percent. If wins are three times the size of losses, 25 percent. Fees push every bar higher.',
+    yLabel: '% of trades won',
+    yFormat: 'pct',
+    bars: [1, 2, 3].map((rr) => ({ label: `Win = ${rr}× loss`, segments: [{ label: 'Break-even win rate', value: 100 / (1 + rr), tone: 'chart1' as Tone }] })),
+  },
+  'expectancy-lines': {
+    type: 'lines',
+    title: 'Average outcome over many trades',
+    desc: 'A line chart of the average path of a KES 100,000 account over 50 trades. Winning 40 percent of trades with wins twice the size of KES 1,000 losses averages plus KES 200 a trade and rises. Winning 70 percent with KES 400 wins and KES 1,000 losses averages minus KES 20 a trade and slowly falls. Winning half of equal KES 1,000 bets with a KES 100 fee each time averages minus KES 100 and falls fastest.',
+    xLabel: 'Trades',
+    yLabel: 'KES',
+    yFormat: 'kes',
+    series: [
+      { label: '40% wins, win 2× loss', tone: 'chart1', points: range(51).map((n) => [n, 100000 + 200 * n] as [number, number]) },
+      { label: '70% wins, small wins', tone: 'chart3', points: range(51).map((n) => [n, 100000 - 20 * n] as [number, number]) },
+      { label: '50% wins, equal, with fees', tone: 'chart2', points: range(51).map((n) => [n, 100000 - 100 * n] as [number, number]) },
+    ],
+  },
+  'drawdown-recovery': {
+    type: 'bars',
+    title: 'The gain needed to recover from a loss',
+    desc: 'Four bars. After losing 10 percent you need about 11 percent to get back to even. After 25 percent, about 33 percent. After 50 percent, 100 percent. After 75 percent, 300 percent. Bigger losses get much harder to recover from.',
+    yLabel: '% gain needed',
+    yFormat: 'pct',
+    bars: [10, 25, 50, 75].map((l) => ({ label: `Lose ${l}%`, segments: [{ label: 'Gain needed to recover', value: recoveryGainPct(l), tone: 'chart2' as Tone }] })),
+  },
+  'trading-plan-loop': {
+    type: 'flow',
+    title: 'A disciplined practice loop',
+    desc: 'A flow from top to bottom. Write a plan before the trade: why, where you enter and where you exit. Size the position so a loss is small. Enter with a stop. Exit when the plan says, not on a feeling. Record it in a journal and review the plan, then start again.',
+    nodes: [
+      { label: 'Write the plan first', note: 'Why, entry, exit, stop' },
+      { label: 'Size it small', note: 'A loss should not hurt much' },
+      { label: 'Enter with a stop' },
+      { label: 'Exit by the plan', note: 'Not by fear or hope' },
+      { label: 'Journal and review', note: 'Then repeat' },
+    ],
+    edges: ['before money moves', 'one decision', 'let it run', 'learn'],
+  },
+  'replay-how': {
+    type: 'flow',
+    title: 'How the paper replay works',
+    desc: 'A flow from top to bottom. A made-up market is generated from random moves, so there is nothing to predict. You start with KES 100,000 of paper money and see some history. Step forward one day at a time and choose to buy, sell or wait, with an optional stop. At the end you get a review that compares your result with simply holding.',
+    nodes: [
+      { label: 'A made-up market', note: 'Random moves, no hidden pattern' },
+      { label: 'KES 100,000 paper money', note: 'Some history is shown first' },
+      { label: 'Step day by day', note: 'Buy, sell or wait; optional stop' },
+      { label: 'Session review', note: 'Compare with simply holding' },
+    ],
+    edges: ['start', 'decide', 'finish'],
+  },
+  'paper-vs-real': {
+    type: 'compare',
+    title: 'What paper trading can and cannot teach',
+    desc: 'Two columns. Paper trading can teach: reading a chart, placing orders, sizing positions, using stops and keeping a journal. It cannot teach: how fear and greed feel with real money, real slippage and fees, or prove you have an edge, because results over a few sessions are mostly luck.',
+    columns: [
+      { heading: 'Paper can teach', tone: 'chart1', items: ['Reading charts', 'Placing orders', 'Sizing and stops', 'Keeping a journal'] },
+      { heading: 'Paper cannot', tone: 'chart2', items: ['Real fear and greed', 'Real slippage', 'Prove you have an edge'] },
     ],
   },
 } satisfies Record<string, DiagramSpec>;

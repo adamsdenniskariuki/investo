@@ -177,3 +177,51 @@ Checked: 2026-10
 - [CMA – Licensees and approved schemes portal](https://licensees.cma.or.ke/)
 - [FINRA BrokerCheck (US brokers)](https://brokercheck.finra.org/)
 - [Capital Markets Authority (CMA)](https://www.cma.or.ke/)
+
+## Charts and paper trading
+
+### t01 — Investing vs trading
+
+Checked: 2026-10
+
+- [Chague, De-Losso & Giovannetti – Day trading for a living? (SSRN working paper)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3423101)
+- [Barber, Lee, Liu & Odean – The cross-section of speculator skill: evidence from day trading (Journal of Financial Markets, 2014)](https://doi.org/10.1016/j.finmar.2013.05.006)
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+
+### t02 — Reading a candlestick chart
+
+- [Nairobi Securities Exchange (NSE)](https://www.nse.co.ke/)
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+
+### t03 — Patterns, trends and randomness
+
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+- [CMA – Public caution against investment scams](https://www.cma.or.ke/public-caution-against-investment-scams/)
+
+### t04 — Orders, spreads and market hours
+
+Checked: 2026-10
+
+- [Nairobi Securities Exchange (NSE)](https://www.nse.co.ke/)
+- [US SEC Investor.gov – Types of orders](https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders)
+- [CMA – Licensees and approved schemes portal](https://licensees.cma.or.ke/)
+
+### t05 — Position sizing: risk a small slice
+
+- [US SEC Investor.gov – Types of orders](https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders)
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+
+### t06 — Win rate, reward and risk
+
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+- [Barber, Lee, Liu & Odean – The cross-section of speculator skill: evidence from day trading (Journal of Financial Markets, 2014)](https://doi.org/10.1016/j.finmar.2013.05.006)
+
+### t07 — Drawdowns and discipline
+
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+- [CMA – Public caution against investment scams](https://www.cma.or.ke/public-caution-against-investment-scams/)
+
+### t08 — Practise with the paper replay
+
+- [US SEC Investor.gov – Day trading: your dollars at risk](https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk)
+- [US SEC Investor.gov – Types of orders](https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders)

@@ -43,6 +43,10 @@ export const SRC = {
     url: 'https://www.esma.europa.eu/press-news/esma-news/esma-agrees-prohibit-binary-options-and-restrict-cfds-protect-retail-investors',
   },
   bisFx: { label: 'BIS – Triennial Central Bank Survey of foreign exchange markets (2025)', url: 'https://www.bis.org/statistics/rpfx25.htm' },
+  secOrders: { label: 'US SEC Investor.gov – Types of orders', url: 'https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders' },
+  secDayTrading: { label: 'US SEC Investor.gov – Day trading: your dollars at risk', url: 'https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading-your-dollars-risk' },
+  dayTradingBrazil: { label: 'Chague, De-Losso & Giovannetti – Day trading for a living? (SSRN working paper)', url: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3423101' },
+  dayTradingTaiwan: { label: 'Barber, Lee, Liu & Odean – The cross-section of speculator skill: evidence from day trading (Journal of Financial Markets, 2014)', url: 'https://doi.org/10.1016/j.finmar.2013.05.006' },
   vaspAct: { label: 'Kenya Law – Virtual Asset Service Providers Act, 2025', url: 'https://new.kenyalaw.org/akn/ke/act/2025/20/eng@2025-11-04' },
   cbkVasp: {
     label: 'CBK – Public notice on the Virtual Asset Service Providers Act, 2025',

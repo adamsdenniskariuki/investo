@@ -21,7 +21,7 @@ function renderChart(title: string, desc: string, chart: ChartSpec): string {
 
 describe('tool definitions', () => {
   it('cover every tool id', () => {
-    expect(Object.keys(TOOL_DEFS).sort()).toEqual([...TOOL_IDS].sort());
+    expect(Object.keys(TOOL_DEFS).sort()).toEqual(TOOL_IDS.filter((t) => t !== 'replay').sort());
   });
 
   for (const id of Object.keys(TOOL_DEFS) as Array<keyof typeof TOOL_DEFS>) {
