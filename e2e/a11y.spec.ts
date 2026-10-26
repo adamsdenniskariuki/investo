@@ -39,6 +39,17 @@ const PAGES: Array<{ name: string; open: (page: Page) => Promise<void> }> = [
   { name: 'calculators', open: (p) => p.goto('/#/tools').then(() => undefined) },
   { name: 'global track', open: (p) => p.goto('/#/track/global').then(() => undefined) },
   { name: 'currency tool', open: (p) => p.goto('/#/tools/fx-return').then(() => undefined) },
+  { name: 'trading track', open: (p) => p.goto('/#/track/trading').then(() => undefined) },
+  { name: 'candles lesson', open: (p) => p.goto('/#/lesson/t02').then(() => undefined) },
+  {
+    name: 'paper replay finished',
+    open: async (p) => {
+      await p.goto('/#/tools/replay');
+      await p.getByRole('button', { name: 'Buy 50%' }).click();
+      await p.getByRole('button', { name: 'Skip to end' }).click();
+      await p.getByRole('heading', { name: 'Session review' }).waitFor();
+    },
+  },
   {
     name: 'calculator with error',
     open: async (p) => {

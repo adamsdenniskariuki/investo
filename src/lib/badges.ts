@@ -31,6 +31,8 @@ export const BADGES: BadgeDef[] = [
   { id: 'backed-up', title: 'Backed up', description: 'Export a backup of your progress.', icon: '💾', check: (p) => !!p.lastExportAt },
   { id: 'xp-250', title: '250 XP', description: 'Earn 250 XP.', icon: '⭐', check: (p) => p.xp >= 250 },
   { id: 'global-done', title: 'Globetrotter', description: 'Finish every lesson in Global stocks and ETFs.', icon: '🌍', check: (p, c) => done(p, c.trackLessons['global']) },
+  { id: 'trading-done', title: 'Chart reader', description: 'Finish every lesson in Charts and paper trading.', icon: '📊', check: (p, c) => done(p, c.trackLessons['trading']) },
+  { id: 'paper-trader', title: 'Paper trader', description: 'Finish a full paper replay session.', icon: '📝', check: (p) => !!p.toolsUsed['replay'] },
 ];
 
 export function badgeById(id: string): BadgeDef | undefined {

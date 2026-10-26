@@ -1,7 +1,8 @@
 import { useId, type ReactNode } from 'react';
 import { niceTicks, wrapText } from '../lib/chart';
 import { compact } from '../lib/format';
-import type { BarSegment, DiagramBody, LineSeries, TimelineEvent, Tone, ValueFormat } from './specs';
+import type { BarSegment, CandleMark, DiagramBody, LineSeries, TimelineEvent, Tone, ValueFormat } from './specs';
+import type { Candle } from '../lib/market';
 
 export const W = 340;
 export const DASHES = ['', '7 4', '2 4', '10 3 2 3'];
@@ -30,8 +31,10 @@ function Lines({ x, y, lines, size = 12, cls = 'dg-text', anchor = 'start', weig
 const wrapPx = (text: string, px: number, size = 12) => wrapText(text, Math.max(6, Math.floor(px / (CHAR_W * (size / 12)))));
 
 // ── Line chart ───────────────────────────────────────────
-export function LineChart({ series, yFormat, xFormat, xLabel, yLabel }: {
+export function LineChart({ series, yFormat, xFormat, xLabel, yLabel, zeroBase = true }: {
   series: LineSeries[]; yFormat: ValueFormat; xFormat?: ValueFormat; xLabel: string; yLabel: string;
+  /** When false, the y-axis fits the data instead of starting at zero — for small changes around a level. */
+  zeroBase?: boolean;
 }) {
   const H = 210;
   const m = { l: 44, r: 12, t: 24, b: 36 };
@@ -42,9 +45,10 @@ export function LineChart({ series, yFormat, xFormat, xLabel, yLabel }: {
   const xMax = Math.max(...xs);
   const yMinData = Math.min(...ys);
   const yMaxData = Math.max(...ys);
-  const yTicks = niceTicks(yMinData < 0 ? yMinData : 0, yMaxData, 4);
-  const y0 = yTicks[0];
-  const y1 = yTicks[yTicks.length - 1];
+  const pad = (yMaxData - yMinData) * 0.1 || Math.abs(yMaxData) * 0.02 || 1;
+  const yTicks = zeroBase ? niceTicks(yMinData, yMaxData, 4) : linearTicks(yMinData - pad, yMaxData + pad, 4);
+  const y0 = zeroBase ? yTicks[0] : yMinData - pad;
+  const y1 = zeroBase ? yTicks[yTicks.length - 1] : yMaxData + pad;
   const pw = W - m.l - m.r;
   const ph = H - m.t - m.b;
   const sx = (v: number) => m.l + (xMax === xMin ? 0 : ((v - xMin) / (xMax - xMin)) * pw);
@@ -416,6 +420,78 @@ function Compare({ columns }: { columns: Array<{ heading: string; tone: Tone; it
   };
 }
 
+// ── Candlesticks ─────────────────────────────────────────
+/** Up bars are hollow and down bars are filled, so direction does not rely on colour alone. */
+export function CandleChart({ candles, yLabel, marks = [], level, firstIndex = 0, height = 210 }: {
+  candles: Candle[]; yLabel: string; marks?: CandleMark[]; level?: { value: number; label: string }; firstIndex?: number; height?: number;
+}) {
+  const H = height;
+  const m = { l: 44, r: 12, t: 24, b: 30 };
+  const lows = candles.map((k) => k.l);
+  const highs = candles.map((k) => k.h);
+  if (level) {
+    lows.push(level.value);
+    highs.push(level.value);
+  }
+  const lo = Math.min(...lows);
+  const hi = Math.max(...highs);
+  const pad = (hi - lo) * 0.08 || 1;
+  const y0 = lo - pad;
+  const y1 = hi + pad;
+  const pw = W - m.l - m.r;
+  const ph = H - m.t - m.b;
+  const sy = (v: number) => m.t + ph - ((v - y0) / (y1 - y0)) * ph;
+  const slot = pw / Math.max(1, candles.length);
+  const bw = Math.max(2, Math.min(14, slot * 0.6));
+  const cx = (i: number) => m.l + slot * i + slot / 2;
+  const ticks = linearTicks(y0, y1, 4);
+  return (
+    <>
+      <text x={4} y={14} className="dg-muted" fontSize={11}>{yLabel}</text>
+      {ticks.map((t) => (
+        <g key={t}>
+          <line x1={m.l} x2={W - m.r} y1={sy(t)} y2={sy(t)} className="dg-grid" />
+          <text x={m.l - 6} y={sy(t) + 4} className="dg-muted" fontSize={11} textAnchor="end">{compact(t)}</text>
+        </g>
+      ))}
+      <line x1={m.l} x2={W - m.r} y1={H - m.b} y2={H - m.b} className="dg-axis" />
+      {level && (
+        <g>
+          <line x1={m.l} x2={W - m.r} y1={sy(level.value)} y2={sy(level.value)} style={{ stroke: toneVar('chart3') }} strokeWidth={1.5} strokeDasharray="6 4" />
+          <text x={W - m.r} y={sy(level.value) - 4} className="dg-text" fontSize={11} textAnchor="end">{level.label}</text>
+        </g>
+      )}
+      {candles.map((k, i) => {
+        const up = k.c >= k.o;
+        const tone = toneVar(up ? 'chart1' : 'chart2');
+        const top = sy(Math.max(k.o, k.c));
+        const bh = Math.max(1.5, sy(Math.min(k.o, k.c)) - top);
+        return (
+          <g key={i}>
+            <line x1={cx(i)} x2={cx(i)} y1={sy(k.h)} y2={sy(k.l)} style={{ stroke: tone }} strokeWidth={1.5} />
+            <rect x={cx(i) - bw / 2} y={top} width={bw} height={bh} style={{ stroke: tone, fill: up ? 'var(--surface)' : tone }} strokeWidth={1.5} />
+          </g>
+        );
+      })}
+      {marks.map((mk, n) => {
+        const i = mk.at - firstIndex;
+        if (i < 0 || i >= candles.length) return null;
+        const k = candles[i];
+        const below = mk.kind === 'buy';
+        const y = below ? sy(k.l) + 14 : sy(k.h) - 6;
+        const anchor = i < candles.length * 0.2 ? 'start' : i > candles.length * 0.8 ? 'end' : 'middle';
+        return (
+          <text key={n} x={cx(i)} y={Math.min(H - m.b - 2, Math.max(m.t + 8, y))} className="dg-text" fontSize={11} fontWeight={700} textAnchor={anchor}>
+            {mk.kind === 'buy' ? '▲ ' : mk.kind === 'sell' ? '▼ ' : ''}
+            {mk.label}
+          </text>
+        );
+      })}
+      <text x={m.l + pw / 2} y={H - 8} className="dg-muted" fontSize={11} textAnchor="middle">Days →</text>
+    </>
+  );
+}
+
 /** Renders a spec body; returns the SVG children and the viewBox height. */
 export function renderBody(body: DiagramBody): { height: number; node: ReactNode; legend?: LegendItem[] } {
   switch (body.type) {
@@ -442,6 +518,15 @@ export function renderBody(body: DiagramBody): { height: number; node: ReactNode
       return Pyramid(body);
     case 'compare':
       return Compare(body);
+    case 'candles':
+      return {
+        height: 210,
+        node: <CandleChart candles={body.candles} yLabel={body.yLabel} marks={body.marks} level={body.level} />,
+        legend: [
+          { label: 'Up day (hollow)', tone: 'chart1', kind: 'box' },
+          { label: 'Down day (filled)', tone: 'chart2', kind: 'box' },
+        ],
+      };
   }
 }
 

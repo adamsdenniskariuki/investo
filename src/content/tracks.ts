@@ -2,13 +2,14 @@ import type { Lesson, ToolId, Track } from './types';
 import { BASICS } from './basics';
 import { KENYA } from './kenya';
 import { GLOBAL } from './global';
+import { TRADING } from './trading';
 
 /** Track ids are append-only; never rename. */
 export const TRACKS: Track[] = [
   { id: 'basics', stage: 1, title: 'Investing basics', tagline: 'How money grows, what can go wrong, and how to spot scams.', status: 'available', lessons: BASICS },
   { id: 'kenya', stage: 2, title: 'Investing in Kenya', tagline: 'MMFs, Saccos, T-bills and bonds, NSE shares, REITs, pensions and tax.', status: 'available', lessons: KENYA },
   { id: 'global', stage: 3, title: 'Global stocks and ETFs', tagline: 'Investing beyond Kenya: currencies, platforms and costs.', status: 'available', lessons: GLOBAL },
-  { id: 'trading', stage: 4, title: 'Charts and paper trading', tagline: 'Read charts and practise with replayed prices and risk tools — paper money only.', status: 'coming-soon', lessons: [] },
+  { id: 'trading', stage: 4, title: 'Charts and paper trading', tagline: 'Read charts and practise on made-up markets with risk tools — paper money only.', status: 'available', lessons: TRADING },
   { id: 'forex', stage: 5, title: 'Forex', tagline: 'How currency markets work and why most retail traders lose.', status: 'coming-soon', lessons: [] },
   { id: 'crypto', stage: 6, title: 'Crypto', tagline: 'What crypto assets are, the risks, and how to avoid scams.', status: 'coming-soon', lessons: [] },
 ];
@@ -21,6 +22,9 @@ export const TOOLS: { id: ToolId; title: string; summary: string; lesson: string
   { id: 'bond', title: 'Bond yield and coupons', summary: 'Coupons, current yield and yield to maturity.', lesson: 'k04' },
   { id: 'emergency', title: 'Emergency-fund planner', summary: 'Your target and how long it takes to build.', lesson: 'b02' },
   { id: 'fx-return', title: 'Currency and return', summary: 'How exchange-rate moves change a foreign return in shillings.', lesson: 'g04' },
+  { id: 'position-size', title: 'Position size', summary: 'How many shares keep a loss within the amount you choose to risk.', lesson: 't05' },
+  { id: 'risk-reward', title: 'Win rate and reward/risk', summary: 'The average result per trade once wins, losses and fees are counted.', lesson: 't06' },
+  { id: 'replay', title: 'Paper replay', summary: 'Practise on a made-up market with paper money, then review your session.', lesson: 't08' },
 ];
 
 export const TOOL_IDS = TOOLS.map((t) => t.id);

@@ -93,3 +93,18 @@ test('coming-soon tracks and unknown pages are handled', async ({ page }) => {
   await page.goto('/#/does-not-exist');
   await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
 });
+
+test('paper replay plays a full session and awards the badge', async ({ page }) => {
+  await page.goto('/#/tools/replay');
+  await page.getByLabel('Stop-loss for the next buy').selectOption('5');
+  await page.getByRole('button', { name: 'Buy 25%' }).click();
+  await expect(page.getByRole('status').filter({ hasText: /Bought \d/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Sell all' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Next day' }).click();
+  await expect(page.getByRole('status').filter({ hasText: /Day 1:/ })).toBeVisible();
+  await page.getByRole('button', { name: 'Skip to end' }).click();
+  await expect(page.getByRole('heading', { name: 'Session review' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Next day' })).toBeDisabled();
+  await page.goto('/#/progress');
+  await expect(page.locator('.badges li', { hasText: 'Paper trader' })).toContainText('(earned)');
+});

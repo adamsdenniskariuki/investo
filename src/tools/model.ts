@@ -332,7 +332,89 @@ const fxReturn: ToolDef = {
   },
 };
 
-export const TOOL_DEFS: Record<ToolId, ToolDef> = {
+const positionSize: ToolDef = {
+  id: 'position-size',
+  fields: [
+    { key: 'account', label: 'Practice account size', def: '100,000', min: 1000, max: 1e9, ...KES_F },
+    { key: 'risk', label: 'Most you will lose on this trade', def: '1', min: 0.1, max: 10, ...PCT_F, hint: 'Many risk guides suggest 1–2% or less.' },
+    { key: 'entry', label: 'Entry price per share', def: '50', min: 0.01, max: 1e6, ...KES_F },
+    { key: 'stop', label: 'Stop price per share', def: '48', min: 0.01, max: 1e6, ...KES_F, hint: 'Must be below the entry price.' },
+  ],
+  compute: ({ account, risk, entry, stop }) => {
+    const budget = (account * risk) / 100;
+    const perShare = entry - stop;
+    const valid = perShare > 0;
+    const byRisk = valid ? Math.floor(budget / perShare) : 0;
+    const byCash = Math.floor(account / entry);
+    const shares = Math.min(byRisk, byCash);
+    const value = shares * entry;
+    const loss = shares * Math.max(0, perShare);
+    const capped = valid && byCash < byRisk;
+    return {
+      results: [
+        { label: 'Amount at risk', value: kes(budget) },
+        { label: 'Risk per share', value: valid ? kes(perShare) : 'Stop must be below entry' },
+        { label: 'Shares', value: shares.toLocaleString('en-KE') },
+        { label: 'Position value', value: kes(value) },
+      ],
+      chartTitle: 'Your account if the stop is hit',
+      chart: {
+        kind: 'bar',
+        bars: [
+          { label: 'Before', segments: [{ label: 'Account', value: account, tone: 'chart1' }] },
+          { label: 'Stop hit', segments: [{ label: 'Account', value: account - loss, tone: 'chart1' }, { label: 'Loss', value: loss, tone: 'chart2' }] },
+        ],
+        yFormat: 'kes',
+        yLabel: 'KES',
+      },
+      desc: valid
+        ? `Risking ${pct(risk, 1)} of ${kes(account)} is ${kes(budget)}. With the stop ${kes(perShare)} below entry, that allows ${shares.toLocaleString('en-KE')} shares worth ${kes(value)}. If the stop is hit the account falls to about ${kes(account - loss)}.`
+        : 'The stop price is not below the entry price, so no position size can be worked out.',
+      note: `${capped ? 'The size is limited by the cash in the account. ' : ''}A stop can fill below its price if the market gaps, so the real loss can be bigger. Fees are not included.`,
+    };
+  },
+};
+
+const riskReward: ToolDef = {
+  id: 'risk-reward',
+  fields: [
+    { key: 'winRate', label: 'Share of trades that win', def: '40', min: 1, max: 99, ...PCT_F },
+    { key: 'win', label: 'Average win', def: '2,000', min: 0, max: 1e8, ...KES_F },
+    { key: 'loss', label: 'Average loss', def: '1,000', min: 1, max: 1e8, ...KES_F },
+    { key: 'fee', label: 'Fees per trade (in and out)', def: '150', min: 0, max: 1e7, ...KES_F },
+    { key: 'trades', label: 'Number of trades', def: '100', min: 1, max: 1000, integer: true },
+  ],
+  compute: ({ winRate, win, loss, fee, trades }) => {
+    const p = winRate / 100;
+    const gross = p * win - (1 - p) * loss;
+    const net = gross - fee;
+    const breakeven = win + loss > 0 ? ((loss + fee) / (win + loss)) * 100 : 100;
+    const xs = sample(Array.from({ length: trades + 1 }, (_, i) => i), 30);
+    return {
+      results: [
+        { label: 'Average per trade before fees', value: kes(gross) },
+        { label: 'Average per trade after fees', value: kes(net) },
+        { label: 'Win rate needed to break even', value: breakeven > 100 ? 'Over 100% — cannot break even' : pct(breakeven, 1) },
+        { label: `Expected total after ${plural(trades, 'trade')}`, value: kes(net * trades) },
+      ],
+      chartTitle: 'Expected running total, before and after fees',
+      chart: {
+        kind: 'line',
+        series: [
+          { label: 'Before fees', tone: 'chart1', points: xs.map((n) => [n, gross * n]) },
+          { label: 'After fees', tone: 'chart2', points: xs.map((n) => [n, net * n]) },
+        ],
+        yFormat: 'kes',
+        xLabel: 'Trades',
+        yLabel: 'KES',
+      },
+      desc: `Winning ${pct(winRate, 0)} of trades with an average win of ${kes(win)} and loss of ${kes(loss)} averages ${kes(gross)} a trade before fees and ${kes(net)} after ${kes(fee)} of fees. Over ${plural(trades, 'trade')} that is an expected ${kes(net * trades)}. You would need to win ${pct(breakeven, 1)} of trades to break even.`,
+      note: 'This is an average. Real results swing a lot around it, and a short run of trades says little about your true win rate. Your numbers are guesses, not facts.',
+    };
+  },
+};
+
+export const TOOL_DEFS: Record<Exclude<ToolId, 'replay'>, ToolDef> = {
   compound,
   inflation,
   fees,
@@ -340,4 +422,6 @@ export const TOOL_DEFS: Record<ToolId, ToolDef> = {
   bond,
   emergency,
   'fx-return': fxReturn,
+  'position-size': positionSize,
+  'risk-reward': riskReward,
 };
