@@ -858,6 +858,115 @@ export const DIAGRAMS = {
       { heading: 'Paper cannot', tone: 'chart2', items: ['Real fear and greed', 'Real slippage', 'Prove you have an edge'] },
     ],
   },
+  // ── Forex ────────────────────────────────────────────────
+  'fx-market-size': {
+    type: 'bars',
+    title: 'How the size of the global currency market compares',
+    desc: 'Two bars in trillions of US dollars traded per day. In April 2025 the global currency market averaged about 9.6 trillion dollars a day, according to the Bank for International Settlements survey; in April 2022 it was about 7.5 trillion. Most of this is banks, companies and funds, not individuals.',
+    yLabel: 'USD trillions a day',
+    yFormat: 'plain',
+    bars: [
+      { label: 'April 2022', segments: [{ label: 'Daily turnover', value: 7.5, tone: 'chart1' }] },
+      { label: 'April 2025', segments: [{ label: 'Daily turnover', value: 9.6, tone: 'chart1' }] },
+    ],
+  },
+  'currency-pair': {
+    type: 'compare',
+    title: 'Reading a currency pair',
+    desc: 'Two columns explaining a made-up quote of EUR/USD 1.0850. The first currency, the euro, is the base: you are buying or selling one euro. The second, the US dollar, is the quote currency: 1.0850 dollars is the price of one euro. If the number rises, the euro has strengthened against the dollar.',
+    columns: [
+      { heading: 'Base: EUR (first)', tone: 'chart1', items: ['The thing being priced', '1 euro', 'Buy = bet it strengthens'] },
+      { heading: 'Quote: USD (second)', tone: 'chart3', items: ['The money you pay in', '1.0850 dollars per euro', 'Sell = bet the euro weakens'] },
+    ],
+  },
+  'pip-ladder': {
+    type: 'ladder',
+    title: 'Pips, using a made-up EUR/USD price',
+    desc: 'A ladder of three made-up EUR/USD prices. At the bottom 1.0850. One pip up is 1.0851, a change in the fourth decimal place. Ten pips up is 1.0860. For pairs quoted against the Japanese yen, a pip is the second decimal place instead.',
+    lowLabel: 'Lower price',
+    highLabel: 'Higher price',
+    rungs: [
+      { label: '1.0850', note: 'Starting price' },
+      { label: '1.0851', note: '+1 pip (fourth decimal place)' },
+      { label: '1.0860', note: '+10 pips' },
+    ],
+  },
+  'lot-sizes': {
+    type: 'bars',
+    title: 'Common lot sizes and the value of one pip',
+    desc: 'Three bars showing roughly what one pip is worth in US dollars on EUR/USD for common trade sizes. A standard lot of 100,000 euros: about 10 dollars a pip. A mini lot of 10,000: about 1 dollar. A micro lot of 1,000: about 10 cents.',
+    yLabel: 'USD per pip',
+    yFormat: 'plain',
+    bars: [
+      { label: 'Standard (100,000)', segments: [{ label: 'USD per pip', value: 10, tone: 'chart1' }] },
+      { label: 'Mini (10,000)', segments: [{ label: 'USD per pip', value: 1, tone: 'chart1' }] },
+      { label: 'Micro (1,000)', segments: [{ label: 'USD per pip', value: 0.1, tone: 'chart1' }] },
+    ],
+  },
+  'leverage-magnify': {
+    type: 'bars',
+    title: 'The same 1% move with different leverage',
+    desc: 'Three bars for a KES 10,000 deposit and a 1 percent price move. With no leverage the gain or loss is KES 100. At 10 times leverage it is KES 1,000. At 100 times leverage it is KES 10,000 — the whole deposit.',
+    yLabel: 'KES gained or lost',
+    yFormat: 'kes',
+    bars: [1, 10, 100].map((L) => ({ label: `${L}×`, segments: [{ label: 'Gain or loss on a 1% move', value: 100 * L, tone: (L === 100 ? 'chart2' : 'chart1') as Tone }] })),
+  },
+  'margin-call-flow': {
+    type: 'flow',
+    title: 'What happens when a leveraged trade goes wrong',
+    desc: 'A flow from top to bottom. You deposit margin and open a leveraged position. The price moves against you and your losses eat into the margin. The broker warns you with a margin call to add money. If losses keep growing, the broker closes the position automatically, called a stop-out, and you keep whatever margin is left — sometimes nothing.',
+    nodes: [
+      { label: 'Deposit margin, open a big position' },
+      { label: 'Price moves against you', note: 'Losses eat the margin' },
+      { label: 'Margin call', note: 'Add money or reduce the trade' },
+      { label: 'Stop-out', note: 'Broker closes it for you' },
+    ],
+    edges: ['leverage', 'warning', 'more losses'],
+  },
+  'cfd-loss-range': {
+    type: 'bars',
+    title: 'Share of retail CFD accounts that lost money (Europe, 2018)',
+    desc: 'Two bars from the European Securities and Markets Authority 2018 review of retail trading in contracts for difference, which include most retail forex trading in Europe. Depending on the firm, between 74 and 89 percent of retail accounts lost money.',
+    yLabel: '% of accounts',
+    yFormat: 'pct',
+    bars: [
+      { label: 'Best firm', segments: [{ label: 'Lost money', value: 74, tone: 'chart2' }, { label: 'Did not lose', value: 26, tone: 'chart1' }] },
+      { label: 'Worst firm', segments: [{ label: 'Lost money', value: 89, tone: 'chart2' }, { label: 'Did not lose', value: 11, tone: 'chart1' }] },
+    ],
+  },
+  'forex-costs': {
+    type: 'pyramid',
+    title: 'Why most retail forex traders lose',
+    desc: 'A pyramid of five layers, each making things harder. At the base, the market is close to random over short periods. Next, the spread and commission on every trade. Then overnight financing fees for holding positions. Then leverage, which magnifies losses. At the top, emotions such as chasing losses.',
+    levels: [
+      { label: 'Emotions', note: 'Chasing losses, overconfidence' },
+      { label: 'Leverage', note: 'Small moves, big losses' },
+      { label: 'Overnight fees', note: 'Charged for holding positions' },
+      { label: 'Spread and commission', note: 'Paid on every trade' },
+      { label: 'Short-term moves are mostly noise', note: 'Hard to predict' },
+    ],
+  },
+  'forex-scam-signs': {
+    type: 'compare',
+    title: 'Forex red flags compared with signs of a licensed broker',
+    desc: 'Two columns. Red flags: guaranteed daily returns, paid signal or copy-trading groups on WhatsApp or Telegram, someone offering to trade for you, pressure to deposit quickly, and withdrawals that are delayed. Signs of a licensed broker: listed on the CMA licensees portal, risk warnings shown clearly, client money kept separate, and no promises of profit.',
+    columns: [
+      { heading: 'Red flags', tone: 'chart2', items: ['Guaranteed returns', 'Paid signal groups', '“We trade for you”', 'Pressure to deposit', 'Slow withdrawals'] },
+      { heading: 'Licensed broker signs', tone: 'chart1', items: ['On the CMA licensees portal', 'Clear risk warnings', 'Client money kept separate', 'No profit promises'] },
+    ],
+  },
+  'check-broker-flow': {
+    type: 'flow',
+    title: 'Checking a forex broker before you deposit',
+    desc: 'A flow from top to bottom. Search the CMA licensees portal for the exact company name. Make sure the website and contact details match the licensed firm, since scammers copy real names. Read the risk warning and the fees. If anything does not match, do not deposit, and report it to the CMA.',
+    nodes: [
+      { label: 'Search the CMA licensees portal', note: 'Exact company name' },
+      { label: 'Match website and contacts', note: 'Scammers copy real names' },
+      { label: 'Read risk warnings and fees' },
+      { label: 'Anything off? Do not deposit', note: 'Report it to the CMA' },
+    ],
+    edges: ['found?', 'details match?', 'still unsure?'],
+  },
 } satisfies Record<string, DiagramSpec>;
 
 export type DiagramId = keyof typeof DIAGRAMS;
